@@ -53,10 +53,6 @@ const App: React.FC = () => {
     return null;
   }
 
-  if(!speedometerData) {
-    return null;
-  }
-
   // Calculate speed percentage for the arc (max speed 200 km/h)
   const speedPercentage = Math.min((speedometerData.speed / speedometerData.maxSpeed) * 100, 100);
   const arcLength = 2 * Math.PI * 110; // radius = 110

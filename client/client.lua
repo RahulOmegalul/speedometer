@@ -43,8 +43,9 @@ CreateThread(function()
     
     if GetResourceState('LegacyFuel') == 'started' then
       fuel = exports['LegacyFuel']:GetFuel(vehicle)
-    end
+    else
       fuel = GetVehicleFuelLevel(vehicle) or fuel;
+    end
 
 
       local speedometerData = {
