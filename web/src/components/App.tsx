@@ -13,6 +13,7 @@ interface SpeedometerData {
 
 const App: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [speedometerData, setSpeedometerData] = useState<SpeedometerData>({
     speed: 0,
     fuel: 100,
@@ -30,10 +31,18 @@ const App: React.FC = () => {
     },
   ]);
 
-  //hooks/useNuiEvent to listen for speedometer updates
   useNuiEvent<boolean>("setVisible", (data) => {
-    setVisible(data);
+    if (data) {
+      setVisible(true);
+      setIsTransitioning(true);
+    } else {
+      setIsTransitioning(false);
+      setTimeout(() => {
+        setVisible(false);
+      }, 500);
+    }
   });
+
   useNuiEvent<SpeedometerData>("updateSpeedometer", (data) => {
     setSpeedometerData(data);
   });
@@ -43,7 +52,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${isTransitioning ? "visible" : "hidden"}`}>
       <div className="speedometer">
         <div className="speed">Speed: {speedometerData.speed} km/h</div>
         <div className="fuel">Fuel: {speedometerData.fuel}%</div>
