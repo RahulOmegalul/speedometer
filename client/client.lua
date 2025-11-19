@@ -1,5 +1,6 @@
 local function toggleNuiFrame(shouldShow)
-  SetNuiFocus(shouldShow, shouldShow)
+  -- Don't set NUI focus for the speedometer - it's just a display element
+  -- SetNuiFocus(shouldShow, shouldShow)  -- Remove this line
   SendReactMessage('setVisible', shouldShow)
 end
 
@@ -14,21 +15,22 @@ RegisterNUICallback('hideFrame', function(_, cb)
   cb({})
 end)
 
-  local function updateSpeedometer(data)
-    SendReactMessage('updateSpeedometer', data)
-  end
+local function updateSpeedometer(data)
+  SendReactMessage('updateSpeedometer', data)
+end
 
-
-  local isSpeedometerVisible = false
+local isSpeedometerVisible = false
 
 CreateThread(function()
   while true do 
     local playerPed = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(playerPed, false)
+    
     if vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) == playerPed then
       if not isSpeedometerVisible then
+        isSpeedometerVisible = true
         toggleNuiFrame(true)
-    end
+      end
 
       local speedometerData = {
         speed = math.floor(GetEntitySpeed(vehicle) * 3.6), -- Convert m/s to km/h
@@ -43,6 +45,7 @@ CreateThread(function()
       Wait(100)
     else 
       if isSpeedometerVisible then
+        isSpeedometerVisible = false
         toggleNuiFrame(false)
       end
       Wait(500)

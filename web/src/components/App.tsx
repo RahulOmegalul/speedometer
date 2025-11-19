@@ -12,7 +12,7 @@ interface SpeedometerData {
 }
 
 const App: React.FC = () => {
-  const [visible, setVisible] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
   const [speedometerData, setSpeedometerData] = useState<SpeedometerData>({
     speed: 0,
     fuel: 100,
