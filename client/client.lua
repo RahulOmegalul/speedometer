@@ -33,15 +33,23 @@ CreateThread(function()
       end
 
     local gear = GetVehicleCurrentGear(vehicle);
+    local fuel = 100;
+    local speed = GetEntitySpeed(vehicle) * 3.6; -- Convert m/s to km/h
+
     local speedY = GetEntitySpeedVector(vehicle, true).y;
     if gear == 0 and speedY < 1.0 then
       gear = -1 -- Reverse gear
     end
     
+    if GetResourceState('LegacyFuel') == 'started' then
+      fuel = exports['LegacyFuel']:GetFuel(vehicle)
+    end
+      fuel = GetVehicleFuelLevel(vehicle) or fuel;
+
 
       local speedometerData = {
-        speed = math.floor(GetEntitySpeed(vehicle) * 3.6), -- Convert m/s to km/h
-        fuel = math.floor(GetVehicleFuelLevel(vehicle)),
+        speed = math.floor(speed), -- Convert m/s to km/h
+        fuel = math.floor(fuel),
         rpm = math.floor((GetVehicleCurrentRpm(vehicle) or 0) * 10000),
         gear = gear,
         isEngineOn = GetIsVehicleEngineRunning(vehicle),
@@ -49,8 +57,8 @@ CreateThread(function()
       }
 
       updateSpeedometer(speedometerData)
-
-      Wait(100)
+      local updateInterval = speed > 10 and 50 or 100
+      Wait(updateInterval)
     else 
       if isSpeedometerVisible then
         isSpeedometerVisible = false
