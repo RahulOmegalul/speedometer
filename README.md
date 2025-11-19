@@ -1,175 +1,132 @@
-Here’s a polished **README / Documentation** draft for your speedometer project on GitHub (repository: [https://github.com/RahulOmegalul/speedometer](https://github.com/RahulOmegalul/speedometer)). Feel free to edit or adapt as needed.
+---
+
+# 🚗💨 **Speedometer**
+
+A clean, modern, React-powered Speedometer UI for FiveM — built with **Lua**, **React + TypeScript**, and **NUI**.
+
+<p align="center">
+  <img src="https://via.placeholder.com/800x350/111/ffffff?text=Speedometer+UI+Preview+%28Replace+Me%29" alt="Speedometer Preview" width="80%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/FiveM-Resource-orange?style=for-the-badge">
+  <img src="https://img.shields.io/badge/React-UI-61dafb?style=for-the-badge&logo=react&logoColor=000">
+  <img src="https://img.shields.io/badge/Lua-Scripting-blue?style=for-the-badge&logo=lua">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
+</p>
 
 ---
 
-# Speedometer
+## 🎨 **Modern Features**
 
-A speedometer UI/resource for FiveM built in Lua + React, forked from the [fivem-react-boilerplate-lua](https://github.com/project-error/fivem-react-boilerplate-lua) project.
-
-## Table of Contents
-
-* [About](#about)
-* [Features](#features)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration](#configuration)
-* [Development & Build](#development--build)
-* [File Structure](#file-structure)
-* [License](#license)
-* [Contributing](#contributing)
-* [Support](#support)
+✨ Clean & minimal UI
+⚡ Real-time vehicle speed updates
+🧩 Modular React component system
+🛠️ Easy to customize (colors, fonts, layout, opacity)
+🎯 Lightweight and optimized
+🖥️ Works on all aspect ratios
 
 ---
 
-## About
+## 🖼️ **UI Example**
 
-The Speedometer project provides a clean and easily integrated speedometer UI for FiveM servers. It uses Lua for the server/client scripting, and React (with TypeScript) for the NUI (browser UI) front-end. The repository is a fork of the fivem-react-boilerplate-lua, giving a solid base for FiveM NUI development.
+> Replace with your actual preview image
 
----
-
-## Features
-
-* Real-time in-game speedometer display (for vehicles)
-* React + TypeScript front-end NUI for UI layout and rendering
-* Lua client/server scripts to feed the UI with game data
-* Modular and extendable: you can customize UI, colors, positioning, etc.
-* Built with hot-reload / fast development in mind (if you follow the boilerplate’s workflow)
+```md
+![Speedometer UI](./docs/example.png)
+```
 
 ---
 
-## Requirements
+## 📦 **Installation**
 
-* A FiveM server (Cfx.re) with resource support
-* Node.js (v10.6 or later) for building the UI front-end (as inherited from the boilerplate)
-* Yarn or npm (for managing front-end dependencies)
-* Basic familiarity with FiveM resources, Lua scripting, and React development
+### 1️⃣ Clone the resource
 
----
+```bash
+git clone https://github.com/RahulOmegalul/speedometer
+```
 
-## Installation
+### 2️⃣ Install UI dependencies
 
-1. Clone or download this repository into your server’s `resources` folder.
+```bash
+cd speedometer/web
+npm install
+```
 
-   ```bash
-   git clone https://github.com/RahulOmegalul/speedometer.git
-   ```
-2. Navigate into the project directory.
+### 3️⃣ Build UI
 
-   ```bash
-   cd speedometer
-   ```
-3. Install the front-end dependencies:
+```bash
+npm run build
+```
 
-   ```bash
-   cd web
-   npm install   # or yarn
-   ```
-4. Build the UI for production (optional):
+### 4️⃣ Add to server config
 
-   ```bash
-   npm run build   # or yarn build
-   ```
-
-   This will generate the `dist` (or built) front-end assets.
-5. Configure the resource in your `server.cfg` or resources start list:
-
-   ```cfg
-   ensure speedometer
-   ```
-6. Restart your server (or resource) and the speedometer UI should appear when in a vehicle.
+```cfg
+ensure speedometer
+```
 
 ---
 
-## Usage
+## ⚙️ **Configuration**
 
-After installation:
+You can easily tweak the UI inside:
 
-* Drive a vehicle in the FiveM server.
-* The UI should show your current speed (units depend on configuration), and update in real time.
-* To customize the UI appearance (colors, position, layout) edit the React front-end code in `web/src` and rebuild.
-* To change behavior (e.g., what data is sent to UI) edit the Lua scripts in `client/` or `server/`.
+```
+web/src/components/
+```
 
----
+Change:
 
-## Configuration
-
-You can customize the speedometer by updating the following:
-
-* In `web/src/components/…` – UI elements such as font, color, size, fallback behavior.
-* In `client/main.lua` (or similar) – which game data to collect (e.g., vehicle speed, gear, unit conversion).
-* Optionally create a config file (e.g., `config.lua` or `uiConfig.json`) for easier runtime changes without editing core code.
-* Depending on your locale or preference, you might want settings such as:
-
-  * Speed unit (km/h, mph)
-  * Display position (top, bottom, left, right)
-  * Visibility toggles (hide when on foot, show only in vehicle)
-  * UI scale to fit different resolutions
-
-Consider adding a config section in the project for ease of use.
+* 🎚️ **Scale**
+* 🎨 **Colors**
+* 🔤 **Fonts**
+* 📐 **Layout / Position**
+* 🚗 **When to show/hide**
 
 ---
 
-## Development & Build
+## 🧠 **Developer Notes**
 
-For active development:
+### Live Development
 
-* In the `web` folder, run the development script (e.g., `npm start`) so that the React UI recompiles on changes.
-* Use the hot-reload / quick build workflow: modify front-end, rebuild, restart the resource in FiveM to see changes.
-* For production: run `npm run build` (or `yarn build`) and ensure the built assets are used by the resource.
-* Commit your changes and follow best practices (e.g., linting, formatting, versioning).
-* If you extend the project (adding new features), update the README accordingly.
+```bash
+npm start
+```
+
+This enables hot-reload for UI.
+
+### Rebuild UI for production
+
+```bash
+npm run build
+```
 
 ---
 
-## File Structure
-
-Here’s an overview of the key files/folders:
+## 📁 **Project Structure**
 
 ```
 /speedometer
-├── client/            # Lua client scripts
-├── server/            # Lua server scripts (if any)
-├── web/               # React TypeScript front-end (NUI)
-│   ├── public/        # Public HTML/assets for NUI
-│   └── src/           # React components, CSS, logic
-├── fxmanifest.lua     # FiveM resource manifest
-├── package-lock.json  # Node dependency lock (in web folder)
-├── .gitignore         # Files/folders to ignore
-└── LICENSE            # MIT License
+├── client/          # Lua client logic
+├── server/          # Server-side (if needed)
+├── web/             # React NUI
+│   ├── public/
+│   └── src/
+├── fxmanifest.lua   # FiveM resource manifest
+└── LICENSE
 ```
 
 ---
 
-## License
+## 🤝 **Contributing**
 
-This project is licensed under the [MIT License](./LICENSE). You’re free to use, modify and distribute it — please retain license attribution.
+PRs welcome! If you want to add:
 
----
+* Themes
+* Extra vehicle data (RPM, fuel, gear, etc.)
+* Animations
+* Customizable settings menu
 
-## Contributing
-
-Contributions are welcome! If you’d like to help:
-
-* Fork the repository
-* Create a new branch for your feature or fix
-* Write clear commit messages and update documentation if needed
-* Submit a Pull Request for review
-
-Please ensure that new additions align with the project’s goals (clean UI, modular, easy to maintain).
+Feel free to contribute.
 
 ---
-
-## Support
-
-If you run into issues or have questions:
-
-* Open an issue on the GitHub repo
-* Provide a clear description of the problem (server version, steps to reproduce, logs)
-* If you’d like to request a feature, describe the use-case and desired behavior
-
-Thank you for using the Speedometer project — happy coding and safe driving!
-
----
-
-Feel free to paste this into your `README.md` and tailor it further (for example by adding screenshots, badges, and usage gifs). If you’d like, I can also help generate a **badge section**, **screenshot gallery**, or **example config file**. Would you like that?
