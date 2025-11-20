@@ -14,7 +14,7 @@ interface SpeedometerData {
 
 const App: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [shouldRender, setShouldRender] = useState<boolean>(false);
   const [speedometerData, setSpeedometerData] = useState<SpeedometerData>({
     speed: 80,
     fuel: 45,
@@ -35,13 +35,15 @@ const App: React.FC = () => {
 
   useNuiEvent<boolean>("setVisible", (data) => {
     if (data) {
-      setVisible(true);
-      setIsTransitioning(true);
+      setShouldRender(true);
+      requestAnimationFrame(() => {
+        setTimeout(() => setVisible(true), 50);
+      });
     } else {
-      setIsTransitioning(false);
+      setVisible(false);
       setTimeout(() => {
-        setVisible(false);
-      }, 300);
+        setShouldRender(false);
+      }, 350); // Slightly longer than animation
     }
   });
 
@@ -49,7 +51,7 @@ const App: React.FC = () => {
     setSpeedometerData(data);
   });
 
-  if (!visible) {
+  if (!shouldRender) {
     return null;
   }
 
@@ -59,7 +61,7 @@ const App: React.FC = () => {
   const arcOffset = arcLength - (arcLength * speedPercentage) / 100;
 
   return (
-    <div className={`app-container ${isTransitioning ? "visible" : "hidden"}`}>
+    <div className={`app-container ${visible ? "visible" : "hidden"}`}>
       <div className="speedometer">
         {/* Speed arc */}
         <div className="speed-arc">
@@ -96,7 +98,6 @@ const App: React.FC = () => {
         <div className="gear-indicator">
           {speedometerData.gear < 0 ? 'R' : speedometerData.gear === 0 ? 'N' : speedometerData.gear}
         </div>
-
 
         {/* Status indicators */}
         <div className="status-indicators">

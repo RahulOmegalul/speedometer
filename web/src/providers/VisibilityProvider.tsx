@@ -49,9 +49,8 @@ export const VisibilityProvider: React.FC<{ children: React.ReactNode }> = ({
         setVisible,
       }}
     >
-      <div
-        style={{ visibility: visible ? "visible" : "hidden", height: "100%" }}
-      >
+      {/* Remove the visibility style wrapper - let components handle their own visibility */}
+      <div style={{ height: "100%" }}>
         {children}
       </div>
     </VisibilityCtx.Provider>
